@@ -1,0 +1,259 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+import Clock from 'react-digital-clock';
+import React from 'react';
+import {ImageBackground,
+        StyleSheet,
+        Image,
+        View,
+        Text,
+        TextInput,
+        TouchableOpacity,
+        KeyboardAvoidingView,
+        ScrollView,
+        Switch,
+        } from 'react-native';
+
+
+
+const backgroundImage=require('./designs/backgroundImage.png');
+const employeeIcon=require('./designs/employee-icon.png');
+const lockIcon=require('./designs/lock-icon.png');
+const eyeOff=require('./designs/eyeOff.png');
+const eyeOpen=require('./designs/eyeOpen.png');
+//const logo=require('./designs/logo.png');
+
+export default class App extends React.Component {
+  constructor(props) {
+      super(props);
+     this.state = { showEyeOff: true };
+      this.toggleShowPassword = this.toggleShowPassword.bind(this);
+    }
+  toggleShowPassword() {
+    this.setState({ secureInput: !this.state.secureInput });
+  }
+
+
+  state = {switchValue:false}
+   toggleSwitch = (value) => {
+       //onValueChange of the switch this function will be called
+       this.setState({switchValue: value})
+       //state changes according to switch
+
+    }
+
+    onPressShowHidePasswrod()  {
+      var imgSource = this.state.showEyeOff? eyeOff : eyeOpen;
+      return (
+        <Image
+        style={ {width:50,height:50} }
+        source={ imgSource }
+        />
+      );
+    }
+
+  render() {
+    return (
+
+
+      <ImageBackground
+
+        style={[styles.background]}
+        resizeMode='stretch'
+        source={backgroundImage}
+      >
+      <KeyboardAvoidingView style={styles.KeyboardWrapper}>
+<View style={styles.container}>
+
+<View style={[styles.container,{flex:1.5,justifyContent:'center'}]}>
+<Image
+      style={{width:150,height:200}}
+      source={employeeIcon}
+  />
+</View>
+      <View style={[styles.container,{flex:2}]}>
+        <ScrollView style={styles.scrollViewWrapper}>
+        <View style={[styles.container,{flex:1}]}>
+              <View style={[styles.containerTextImage,{justifyContent:'center'}]}>
+                    <Text style={styles.textWrapping} >
+                          Sign in to your
+                          <Text style={[styles.textWrapping,{color:'#F89200'}]}> Ettendance
+                                <Text style={styles.textWrapping}> Account</Text>
+                          </Text>
+                    </Text>
+              </View>
+              <View style={[styles.inputText,styles.containerTextImage,{padding:0}]}>
+                    <View style={{flex:1}}>
+                          <Image
+                                style={{width:50,height:50}}
+                                source={employeeIcon}
+                            />
+                    </View>
+                    <View style={{flex:3}}>
+                          <TextInput placeholder="Username" />
+                    </View>
+              </View>
+              <View style={[styles.inputText,styles.containerTextImage,{padding:0}]}>
+                    <View style={{flex:1}}>
+                          <Image
+                                style={{width:50,height:50,borderRadius:40}}
+                                source={lockIcon}
+                          />
+                    </View>
+                    <View style={{flex:2}}>
+                          <TextInput
+                                    placeholder="Enter Pin"
+                                    secureTextEntry={this.state.showPassword}
+                                    onChangeText={(password) => this.setState({ password })}
+                                    />
+                    </View>
+                    <TouchableOpacity
+                       onPress={ () => this.setState({ showEyeOff: !this.state.showEyeOff }) }
+                      activeOpcaity={.03}
+                      style={{alignItems:'flex-end',flex:1}}>
+                              {this.onPressShowHidePasswrod()}
+                    </TouchableOpacity>
+              </View>
+
+
+              <View style={[styles.containerTextImage]}>
+                    <TouchableOpacity
+                          style={[styles.inputText,{backgroundColor:'#F89200',justifyContent:'center'}]}
+                          activeOpcaity={.05} >
+                          <View style={{alignItems:'center'}}>
+                                <Text>Sign In</Text>
+                          </View>
+                    </TouchableOpacity>
+              </View>
+
+        </View>
+
+        </ScrollView>
+      </View>
+        <View style={[styles.containerTextImage,{alignItems:'flex-end'}]}>
+              <View style={styles.containerTextImage}>
+                    <Switch
+                          color='orange'
+                          onValueChange={this.toggleSwitch}
+                          value={this.state.switchValue}
+                      />
+                    <Text style={[styles.textWrapping,{marginLeft:0}]}>Remember Me</Text>
+              </View>
+
+              <TouchableOpacity activeOpcaity={.05} >
+                    <View>
+                          <Text style={[styles.textWrapping,{color:'#F89200'}]}>Forget Password?</Text>
+                    </View>
+              </TouchableOpacity>
+        </View>
+  </View>
+  </KeyboardAvoidingView>
+
+</ImageBackground>
+
+
+<View style={[styles.container,{flex:2,alignSelf:'flex-end',backgroundColor:'#00204A',alignItems:'center'}]}>
+
+    <View style={[styles.container]}/>
+    <View style={[styles.containerTextImage,{justifyContent:'space-between',alignItems:'center'}]}>
+          <View style={styles.container}>
+                <TouchableOpacity style={[styles.container,{backgroundColor:'#448Ef6',width:'99%',alignSelf:'flex-start',borderRadius:5,alignItems:'center'}]}>
+                    <Image
+                      style={{width:50,height:50}}
+                      source={attendanceReport}
+                    />
+                    <Text>Attendance Report</Text>
+                </TouchableOpacity>
+          </View>
+          <View style={styles.container,{flex:1}}>
+                <TouchableOpacity style={[styles.container,{backgroundColor:'#448Ef6',width:'99%',alignSelf:'center',borderRadius:5,alignItems:'center'}]}>
+                    <Image
+                        style={{width:50,height:50}}
+                        source={markAttendance}
+                    />
+                    <Text>Time In</Text>
+                </TouchableOpacity>
+
+          </View>
+
+          <View style={styles.container,{flex:1}}>
+          <TouchableOpacity style={[styles.container,{backgroundColor:'#448Ef6',width:'99%',borderRadius:5,alignSelf:'flex-end',alignItems:'center'}]}>
+              <Image
+                  style={{width:50,height:50}}
+                  source={backIcon}
+              />
+              <Text>Leave</Text>
+          </TouchableOpacity>
+          </View>
+    </View>
+</View>
+
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    display:'flex',
+    flex: 1,
+    alignItems:'center',
+    flexDirection:'column',
+  },
+  KeyboardWrapper: {
+    display: "flex",
+    flex: 1,
+
+  },
+  scrollViewWrapper: {
+    marginTop: 70,
+    flex: 1
+  },
+  background:{
+    width:'100%',
+    height:'100%',
+    justifyContent:'center',
+    alignItems:'center',
+    flex:1,
+    },
+    containerVertical:{
+      flex: 1,
+      justifyContent: 'center',
+    },
+  containerTextImage: {
+    flex:1,
+    flexDirection: 'row',
+      },
+  textWrapping: {
+    //flexDirection:'row',
+    fontSize: 15,
+    margin: 10,
+    textAlign: 'center',
+    color:'#fff',
+    fontFamily: 'San',
+
+  },
+  inputText: {
+    width: '97%',
+    borderRadius:40,
+    backgroundColor: '#FFF',
+    borderBottomColor:'#F89200',
+    padding: 18,
+    marginBottom: 15,
+  },
+  logocontainer:{
+    marginTop:150,
+    alignItems:'center',
+    marginBottom:250,
+    },
+  bottom: {
+  flex: 1,
+  justifyContent: 'flex-end',
+  marginBottom:36,
+},
+
+});
